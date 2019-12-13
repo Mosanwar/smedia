@@ -12,6 +12,11 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "User", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
 public class User extends AbstractEntity {
 
     @Id
@@ -21,11 +26,9 @@ public class User extends AbstractEntity {
     @Email
     private String email;
 
-    private String firstName;
+    private String name;
 
     private String phoneNumber;
-
-    private String lastName;
 
     private Integer age;
 
@@ -34,6 +37,8 @@ public class User extends AbstractEntity {
     private Boolean blocked;
 
     private String city;
+
+    private String password;
 
     @ManyToMany
     @JoinTable(
@@ -61,4 +66,19 @@ public class User extends AbstractEntity {
             inverseJoinColumns=@JoinColumn(name="USER_ID")
     )
     private Set<User> followers;
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String name, String email, String password, Integer age, String phoneNumber, String city) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+    }
 }
