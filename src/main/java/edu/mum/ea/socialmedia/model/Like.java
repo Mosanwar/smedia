@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -20,10 +21,12 @@ public class Like {
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
+    @NotNull
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "POST_ID")
+    @NotNull
     @JsonIgnore
     private Post post;
 }

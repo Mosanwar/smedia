@@ -18,6 +18,34 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/add")
+    public Post savePost(@RequestBody Post post) {
+        if(postService.isBlocked(post.getUser().getId())){
+            return null;
+        }
+
+        return postService.savePost(post);
+    }
+
+    @RequestMapping(value = "/blockedPost", method = RequestMethod.GET)
+    public List<Post> blockedPost() {
+        return postService.getAllMeltiousPost();
+    }
+    @RequestMapping(value = "/ignorePost", method = RequestMethod.POST)
+    public Boolean ignorePost(Long postId) {
+        return postService.ignorePost(postId);
+    }
+    @RequestMapping(value = "/deactivatePost", method = RequestMethod.POST)
+    public Boolean deactivatePost(Long postId) {
+        Post p= postService.getPostById(postId);
+        if(postService.deactivatPost(p)!=null){
+            return  true;
+        }
+        return false;
+    }
 
     @PostMapping("/addComment/{postId}/{comment}")
     public void addComment(@PathVariable("postId") int postId,@PathVariable("comment") String comment)

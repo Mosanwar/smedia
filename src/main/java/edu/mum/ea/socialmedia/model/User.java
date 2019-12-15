@@ -8,34 +8,48 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "User", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
 public class User extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @NotBlank
     @Email
+    @Column(nullable = false,unique = true)
     private String email;
+    @NotEmpty
+    private String name;
 
     private String firstName;
 
-    private String phoneNumber;
-
     private String lastName;
 
+    private String phoneNumber;
+
     private Integer age;
-
+  @Column(nullable = false)
     private Boolean active;
-
+  @Column(nullable = false)
     private Boolean blocked;
 
     private String city;
+    @NotEmpty
+    @Column(nullable = false)
+    private String password;
 
     @ManyToMany
     @JoinTable(
@@ -44,6 +58,7 @@ public class User extends AbstractEntity {
                     name = "USER_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(
                     name = "ROLE_ID", referencedColumnName = "ID"))
+    @NotNull
     private Set<Role> roles;
 
     @ManyToMany(
@@ -64,4 +79,19 @@ public class User extends AbstractEntity {
             inverseJoinColumns=@JoinColumn(name="USER_ID")
     )
     private Set<User> followers;
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String name, String email, String password, Integer age, String phoneNumber, String city) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+    }
 }

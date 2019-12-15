@@ -1,6 +1,7 @@
 package edu.mum.ea.socialmedia.service;
 
 import edu.mum.ea.socialmedia.model.Post;
+import edu.mum.ea.socialmedia.model.User;
 import org.springframework.data.domain.Page;
 
 import java.awt.print.Pageable;
@@ -16,5 +17,16 @@ public interface PostService {
     void addComment(int postId,String comment);
     void addLike(int postId);
     void removeLike(int postId);
+
+    //creates a Post
+    Post savePost(Post post);
+    void detectMeliousPost(Long postId);
+    Post getPostById(Long postId);
+    Long countByDisabledTruePerUser(Long UserId);
+    boolean isAbuser(User user);
+    Post deactivatPost(Post post);
+    Boolean ignorePost(Long id);
+    List<Post> getAllMeltiousPost();
+    boolean isBlocked(Long userId);
    // Page<Product> allProductsSortedByName = productRepository.findAll(Sort.by("name"));
 }

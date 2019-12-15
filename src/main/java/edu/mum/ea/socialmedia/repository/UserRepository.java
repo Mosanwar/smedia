@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 import java.util.List;
 
 @Repository
@@ -18,6 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //@Query("delete from User.followings f where f.email  and U.email = :userEmail ")
     //void deleteFollowingByEmail(String userEmail,String followingEmail);
 
-
-
+    Boolean existsByEmail(String email);
+    List<User> findAllByActiveFalse();
+    @Query("select user from User as user where user.blocked=true and user.active= false and user.id=?1")
+    boolean checkActiveUser(Long userId);
 }
