@@ -1,5 +1,7 @@
 package edu.mum.ea.socialmedia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,6 +55,7 @@ public class User extends AbstractEntity {
             joinColumns=@JoinColumn(name="USER_ID"),
             inverseJoinColumns=@JoinColumn(name="FOLLOWING_ID")
     )
+    @JsonIgnore
     private Set<User> followings;
 
     @ManyToMany
