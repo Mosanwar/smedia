@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.mum.ea.socialmedia.model.Post;
 import edu.mum.ea.socialmedia.repository.PostRepository;
+import org.springframework.stereotype.Service;
 
-
-
+@Service
 public class PostServiceImpl implements PostService {
 	
 	@Autowired

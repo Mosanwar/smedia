@@ -12,6 +12,7 @@ import java.util.List;
 
 @Setter
 @Getter
+@CrossOrigin
 @RestController
 @RequestMapping("/role")
 public class RoleController {

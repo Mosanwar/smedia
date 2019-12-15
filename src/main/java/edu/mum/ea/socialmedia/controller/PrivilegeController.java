@@ -11,6 +11,7 @@ import java.util.List;
 
 @Setter
 @Getter
+@CrossOrigin
 @RestController
 @RequestMapping(("/privilege"))
 public class PrivilegeController {
