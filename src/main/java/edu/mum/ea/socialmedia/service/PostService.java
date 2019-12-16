@@ -6,4 +6,7 @@ public interface PostService {
 	
 	//creates a Post
 	Post savePost(Post post);
+	
+	//Get a Post
+	Post getPost(Long id);
 }

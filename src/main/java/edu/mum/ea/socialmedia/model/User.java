@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Set;
 
 @Setter
@@ -28,6 +31,7 @@ public class User extends AbstractEntity {
 
     private String name;
 
+    
     private String phoneNumber;
 
     private Integer age;
@@ -39,6 +43,11 @@ public class User extends AbstractEntity {
     private String city;
 
     private String password;
+    
+    @Transient
+    private MultipartFile image;
+    
+    private String imageURL;
 
     @ManyToMany
     @JoinTable(
