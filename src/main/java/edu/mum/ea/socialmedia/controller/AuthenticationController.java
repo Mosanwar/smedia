@@ -50,7 +50,9 @@ public class AuthenticationController {
         String jwt = jwtProvider.generateJwtToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        User user = userRepository.findByEmail(userDetails.getUsername());
+
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), user, userDetails.getAuthorities()));
     }
 
     @PostMapping("/signup")
