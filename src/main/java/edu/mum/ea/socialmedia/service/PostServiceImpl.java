@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.mum.ea.socialmedia.model.Post;
 import edu.mum.ea.socialmedia.repository.PostRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,7 +56,7 @@ public class PostServiceImpl implements PostService {
 
         Post post = postRepository.getOne(Long.valueOf(postId));
         //TODO get actual user
-        User user = userRepository.findByEmail("ahmed@gmail.com");
+        User user = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Comment comment1 = new Comment();
         comment1.setBody(comment);
         comment1.setUser(user);
@@ -70,7 +71,7 @@ public class PostServiceImpl implements PostService {
 
         Post post = postRepository.getOne(Long.valueOf(postId));
         //TODO get actual user
-        User user = userRepository.findByEmail("ahmed@gmail.com");
+        User user = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Like like = new Like();
         like.setUser(user);
         like.setPost(post);
@@ -85,7 +86,7 @@ public class PostServiceImpl implements PostService {
 
         Post post = postRepository.getOne(Long.valueOf(postId));
         //TODO get actual user
-        User user = userRepository.findByEmail("ahmed@gmail.com");
+        User user = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Like like = post.getLikes().stream().filter(L -> user.equals(L.getUser()))
                 .findAny()
                 .orElse(null);

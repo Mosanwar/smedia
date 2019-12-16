@@ -8,6 +8,7 @@ import edu.mum.ea.socialmedia.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,6 +68,7 @@ public class UserController {
     @PostMapping("/GetFollowings")
     public List<User> findFollowings(@RequestBody String email)
     {
+        SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.findFollowings(email);
     }
     @PostMapping("/DeleteFollowing/{userEmail}/{followingEmail}")

@@ -1,6 +1,6 @@
 package edu.mum.ea.socialmedia.model;
 
-//import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
@@ -20,13 +20,13 @@ public abstract class AbstractEntity {
     @PrePersist
     public void onPrePersist() {
         setCreatedDate(LocalDateTime.now());
-//        setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+        setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @PreUpdate
     public void onPreUpdate() {
         setModifiedDate(LocalDateTime.now());
-//        setModifiedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+        setModifiedBy(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     public LocalDateTime getCreatedDate() {
