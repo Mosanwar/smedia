@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.util.List;
+
 
 @RestController
 @CrossOrigin
@@ -59,6 +62,7 @@ public class PostController {
     public List<Post> blockedPost() {
         return postService.getAllMeltiousPost();
     }
+
     @RequestMapping(value = "/ignorePost", method = RequestMethod.POST)
     public Boolean ignorePost(Long postId) {
         return postService.ignorePost(postId);
