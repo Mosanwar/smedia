@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -34,6 +37,7 @@ public class User extends AbstractEntity {
     @NotEmpty
     private String name;
 
+
     private String firstName;
 
     private String lastName;
@@ -50,6 +54,11 @@ public class User extends AbstractEntity {
     @NotEmpty
     @Column(nullable = false)
     private String password;
+    
+    @Transient
+    private MultipartFile image;
+    
+    private String imageURL;
 
     @ManyToMany
     @JoinTable(

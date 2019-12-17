@@ -8,7 +8,11 @@ import edu.mum.ea.socialmedia.repository.UserRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     private ClaimService claimService;

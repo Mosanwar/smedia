@@ -1,11 +1,14 @@
 package edu.mum.ea.socialmedia.service;
 
+import javax.transaction.Transactional;
+
 import edu.mum.ea.socialmedia.model.*;
 import edu.mum.ea.socialmedia.repository.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import edu.mum.ea.socialmedia.model.Post;
 import edu.mum.ea.socialmedia.repository.PostRepository;
@@ -19,6 +22,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 @Service
+@Transactional
 @Setter
 @Getter
 @NoArgsConstructor
@@ -175,5 +179,12 @@ public class PostServiceImpl implements PostService {
 	public List<Post> getAllMeltiousPost() {
 		return postRepository.getAllByMaliciousIsTrue();
 	}
+
+	@Override
+	public Post getPost(Long id) {
+		// TODO Auto-generated method stub
+		return postRepository.getOne(id);
+	}
+	
 
 }

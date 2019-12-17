@@ -5,6 +5,16 @@ import edu.mum.ea.socialmedia.model.Claim;
 import edu.mum.ea.socialmedia.model.User;
 import edu.mum.ea.socialmedia.service.ClaimService;
 import edu.mum.ea.socialmedia.service.UserService;
+
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
 @Setter
 @Getter
 @CrossOrigin
@@ -33,8 +42,24 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user){
-        return userService.add(user);
+    public User addUser(@RequestBody User user, HttpServletRequest request){
+        
+    	MultipartFile photo = user.getImage();
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+
+		if (photo != null && !photo.isEmpty()) {
+			try {
+				java.util.Date date = new java.util.Date();
+				int i = (int) (date.getTime() / 1000);
+				String path = rootDirectory + "resources\\images\\" + i + ".png";
+				photo.transferTo(new File(path));
+				user.setImageURL("resources\\images\\" + i + ".png");
+			} catch (Exception e) {
+				throw new RuntimeException("Product Image saving failed", e);
+			}
+		}
+    	
+    	return userService.add(user);
     }
 
     @PostMapping("assignRoles")

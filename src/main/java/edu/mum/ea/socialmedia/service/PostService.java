@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
-
+	
+	
+	//Get a Post
+	Post getPost(Long id);
     Page<Post> getAllPosts(String userEmail, int pageNo);
     Page<Post> searchAllPosts(String userEmail, int pageNo,String searchTxt);
     Page<Post> getAllPostsWithFollowers(String userEmail,int pageNo);

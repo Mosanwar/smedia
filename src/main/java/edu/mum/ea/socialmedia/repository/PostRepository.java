@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import edu.mum.ea.socialmedia.model.Post;
 import org.springframework.data.jpa.repository.Query;
@@ -31,8 +32,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<Post> getPostById(long Id);
 
+<<<<<<< HEAD
+@Repository
+public interface PostRepository extends JpaRepository<Post, Long>{
+=======
     @Query("select count (p.id) from Post as p where p.disabled=true and p.user.id=?1")
     Long countByDisabledTruePerUser(Long userId);
+>>>>>>> d4666e7ab51adb4ab2828caff3afaa4b9c9678bf
 
     List<Post> getAllByMaliciousIsTrue();
 }
