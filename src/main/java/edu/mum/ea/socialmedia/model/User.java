@@ -46,9 +46,9 @@ public class User extends AbstractEntity {
 
     private Integer age;
   @Column(nullable = false)
-    private Boolean active;
+    private Boolean active = true;
   @Column(nullable = false)
-    private Boolean blocked;
+    private Boolean blocked = false;
 
     private String city;
     @NotEmpty

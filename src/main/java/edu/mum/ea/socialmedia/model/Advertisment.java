@@ -3,17 +3,9 @@ package edu.mum.ea.socialmedia.model;
 import java.sql.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.istack.NotNull;
