@@ -52,16 +52,15 @@ public class UserController {
     }
 
 
-    @PostMapping("/addClaim")
-    public ResponseEntity addClaim(@RequestParam("msg") String claimBoudy, @RequestBody User user){
+    @PostMapping("/addClaim/{msg}")
+    public void addClaim(@PathVariable("msg") String claimBoudy, @RequestBody User user){
         user = getUserService().findUserById(user.getId());
-        if((user.getBlocked()==true) && (claimService.getClaimByUserId(user.getId()).isEmpty())){
+        //if((user.getBlocked()==true) && (claimService.getClaimByUserId(user.getId()).isEmpty())){
             Claim c=new Claim(claimBoudy);
-
-            return userService.addClaim(user,c);
-        }else{
-            return new ResponseEntity("You claimed before or not blocked  ", HttpStatus.FORBIDDEN);
-        }
+            userService.addClaim(user,c);
+        //}else{
+            //return new ResponseEntity("You claimed before or not blocked  ", HttpStatus.FORBIDDEN);
+       // }
 
     }
 

@@ -4,12 +4,14 @@ import edu.mum.ea.socialmedia.model.Claim;
 import edu.mum.ea.socialmedia.service.ClaimService;
 import edu.mum.ea.socialmedia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class ClaimController {
 
@@ -28,7 +30,8 @@ public class ClaimController {
 
     }
     @RequestMapping(value = "/ignoreClaim", method = RequestMethod.DELETE)
-    public Boolean ignoreClaim(long userId) {
+    public Boolean ignoreClaim(Long userId) {
+
         return claimService.ignoreCalim(userId);
     }
     @RequestMapping(value = "/activateClaim", method = RequestMethod.POST)
