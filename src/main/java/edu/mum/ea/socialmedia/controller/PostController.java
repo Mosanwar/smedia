@@ -4,6 +4,8 @@ package edu.mum.ea.socialmedia.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,30 +31,42 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
 
-	@Autowired
+    public static String uploadDirectory="F:\\Courses\\MUM\\EA\\Social-UI\\src\\assets\\images\\";
+
+    @Autowired
 	private PostService postService;
     
 	@Autowired
     private UserService userService;
 
-	@PostMapping("/add")
-	public Post savePost(@RequestBody Post post, HttpServletRequest request) {
-		
-		MultipartFile photo = post.getImage();
-		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+    @Autowired
+    private SimpMessagingTemplate template;
 
+	@PostMapping("/add")
+	public Post savePost(@RequestHeader("Authorization") String token,@RequestPart("post") Post post,
+                         @RequestParam("images") MultipartFile[] files, HttpServletRequest request) {
+		
+		MultipartFile photo = files[0];
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+        post.setUser(userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
 		if (photo != null && !photo.isEmpty()) {
 			try {
 				java.util.Date date = new java.util.Date();
 				int i = (int) (date.getTime() / 1000);
-				String path = rootDirectory + "resources\\images\\" + i + ".png";
-				photo.transferTo(new File(path));
-				post.setImageURL("resources\\images\\" + i + ".png");
+				String path = uploadDirectory + i + ".png";
+                File dirFile = new File(path);
+                if (!dirFile.exists()) {
+                    dirFile.mkdirs();
+                }
+				photo.transferTo(dirFile);
+				post.setImageURL(i + ".png");
 			} catch (Exception e) {
 				throw new RuntimeException("Product Image saving failed", e);
 			}
 		}
-		return postService.savePost(post);
+        //this.template.convertAndSend("/notifications",  post.getUser().getName() + " added a new comment");
+
+        return postService.savePost(post);
 	}
 	@GetMapping("getPost")
 	public Post getPost(@RequestParam("id") Long id) {

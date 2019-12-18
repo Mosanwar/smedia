@@ -2,12 +2,14 @@ package edu.mum.ea.socialmedia.service;
 
 import javax.transaction.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.mum.ea.socialmedia.model.*;
 import edu.mum.ea.socialmedia.repository.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import edu.mum.ea.socialmedia.model.Post;
@@ -45,6 +47,9 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	private SimpMessagingTemplate template;
+
     @Override
     public Page<Post> getAllPostsWithFollowers(String userEmail, int pageNo) {
         return postRepository.findAllPostsWithFollowers(PageRequest.of(pageNo,10),userEmail);
@@ -70,6 +75,7 @@ public class PostServiceImpl implements PostService {
         commentSet.add(comment1);
         post.setComments(commentSet);
         postRepository.save(post);
+		this.template.convertAndSend("/notifications",  user.getName() + " added a new comment");
     }
     public void addLike(int postId) {
 

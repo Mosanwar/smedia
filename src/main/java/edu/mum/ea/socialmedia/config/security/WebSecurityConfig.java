@@ -37,7 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/v2/api-docs",
             "/webjars/**",
             "/api/auth/**",
-            "/resources/**"
+            "/resources/**",
+            "/gkz-stomp-endpoint/**"
     };
 
     @Bean
