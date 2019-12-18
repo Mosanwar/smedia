@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findFollowongByEmail(email);
     }
 
+
     @Override
     public void deleteFollowing(String userEmail, String followingEmail) {
         User user = userRepository.findByEmail(userEmail);
@@ -76,10 +78,14 @@ public class UserServiceImpl implements UserService {
     public User add(User user) {
         return userRepository.save(user);
     }
+
+    @PreAuthorize("hasRole('READ_BLOCKED_USERS')")
     @Override
     public List<User> getBlockedUsers() {
         return userRepository.findAllByActiveFalse();
     }
+
+    @PreAuthorize("hasRole('ROLE_DEACTIVATE_USER')")
     @Override
     public Boolean deactivatUser(User user) {
         user.setBlocked(true);
@@ -89,6 +95,7 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @PreAuthorize("hasRole('ROLE_ACTIVATE_USER')")
     @Override
     public Boolean activate(Long id) {
         User user = userRepository.findById(id).get();
@@ -98,6 +105,7 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADD_CLAIM')")
     @Override
     public ResponseEntity addClaim(User user, Claim claim) {
         return claimService.addClaim(user,claim);
@@ -116,6 +124,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_MANAGE_ROLES')")
     @Override
     public User assignRoles(AssignRolesData data) {
         User user = getUserRepository().findById(data.getTargetUser()).get();
@@ -124,6 +133,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+//    @PreAuthorize("hasRole('ROLE_READ_ALL_USERS')")
     @Override
     public List<User> findAll() {
         return getUserRepository().findAll();

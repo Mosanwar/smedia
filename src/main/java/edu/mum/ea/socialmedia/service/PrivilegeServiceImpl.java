@@ -5,6 +5,7 @@ import edu.mum.ea.socialmedia.repository.PrivilegeRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +19,10 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     @Autowired
     private PrivilegeRepository privilegeRepository;
 
-
+    @PreAuthorize("hasRole('ROLE_MANAGE_PRIVILEGES')")
     @Override
     public Privilege add(Privilege privilege) {
+        privilege.setName("ROLE_"+privilege.getName());
         return getPrivilegeRepository().save(privilege);
     }
 
@@ -34,6 +36,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return getPrivilegeRepository().findAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGE_PRIVILEGES')")
     @Override
     public void delete(Long id) {
         getPrivilegeRepository().deleteById(id);
