@@ -23,6 +23,7 @@ public interface UserService {
     User findUserById(Long userId);
     boolean isBlocked(Long userId);
 
+    User findUserBytoken();
 
     User assignRoles(AssignRolesData data);
 

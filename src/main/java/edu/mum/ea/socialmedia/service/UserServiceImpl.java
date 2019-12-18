@@ -127,5 +127,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
         return getUserRepository().findAll();
     }
-
+    
+    @Override
+    public User findUserBytoken() {
+        return userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 }

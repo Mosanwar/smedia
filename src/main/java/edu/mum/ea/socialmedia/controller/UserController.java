@@ -41,6 +41,11 @@ public class UserController {
         return userService.findByEmail(email);
     }
 
+    @PostMapping("/byToken")
+    public User findByToken(){
+        return userService.findUserBytoken();
+    }
+    
     @PostMapping("/add")
     public User addUser(@RequestBody User user, HttpServletRequest request){
         
