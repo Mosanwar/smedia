@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         user.setBlocked(true);
         user.setActive(false);
         userRepository.save(user);
-        emailService.sendMail(user);
+        //emailService.sendMail(user);
         return true;
     }
 

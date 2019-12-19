@@ -32,7 +32,8 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
 
-    public static String uploadDirectory="F:\\Courses\\MUM\\EA\\Social-UI\\src\\assets\\images\\";
+    public static String uploadDirectory="F:\\Courses\\MUM\\EA\\Solutions\\Social-UI\\src\\assets\\images\\";
+
 
     @Autowired
 	private PostService postService;

@@ -2,6 +2,7 @@ package edu.mum.ea.socialmedia.controller;
 
 import edu.mum.ea.socialmedia.model.AssignRolesData;
 import edu.mum.ea.socialmedia.model.Claim;
+import edu.mum.ea.socialmedia.model.Post;
 import edu.mum.ea.socialmedia.model.User;
 import edu.mum.ea.socialmedia.service.ClaimService;
 import edu.mum.ea.socialmedia.service.UserService;
@@ -33,6 +34,8 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    public static String uploadDirectory="F:\\Courses\\MUM\\EA\\Solutions\\Social-UI\\src\\assets\\images\\";
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -49,18 +52,19 @@ public class UserController {
     }
     
     @PostMapping("/add")
-    public User addUser(@RequestBody User user, HttpServletRequest request){
+    public User addUser(@RequestHeader("Authorization") String token,@RequestPart("user") User user,
+                        @RequestParam("images") MultipartFile[] files, HttpServletRequest request){
         
-    	MultipartFile photo = user.getImage();
+    	MultipartFile photo = files[0];
 		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 
-		if (photo != null && !photo.isEmpty()) {
+ 		if (photo != null && !photo.isEmpty()) {
 			try {
 				java.util.Date date = new java.util.Date();
 				int i = (int) (date.getTime() / 1000);
-				String path = rootDirectory + "resources\\images\\" + i + ".png";
+				String path = uploadDirectory + i + ".png";
 				photo.transferTo(new File(path));
-				user.setImageURL("resources\\images\\" + i + ".png");
+				user.setImageURL( i + ".png");
 			} catch (Exception e) {
 				throw new RuntimeException("Product Image saving failed", e);
 			}
