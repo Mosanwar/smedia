@@ -20,7 +20,6 @@ public class Post extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty
 
     private String body;
 
