@@ -126,6 +126,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public Post savePost(Post post) {
 		// TODO Auto-generated method stub
+		this.template.convertAndSend("/notifications",  post.getUser().getName() + " added a new post");
 		return postRepository.save(post);
 	}
 	@Override

@@ -1,6 +1,9 @@
 package edu.mum.ea.socialmedia.service;
 
 import edu.mum.ea.socialmedia.model.Advertisment;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface AdvertismentService {
 	
@@ -9,4 +12,6 @@ public interface AdvertismentService {
 	
 	//get Ad
 	Advertisment getAdvertisment(Long id);
+
+	List<Advertisment> getAdsByUser(Integer age, String city);
 }

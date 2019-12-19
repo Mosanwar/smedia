@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.mum.ea.socialmedia.model.Advertisment;
 import edu.mum.ea.socialmedia.repository.AdvertismentRepository;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class AdvertismentServiceImpl implements AdvertismentService{
@@ -29,6 +31,11 @@ public class AdvertismentServiceImpl implements AdvertismentService{
 	public Advertisment getAdvertisment(Long id) {
 		// TODO Auto-generated method stub
 		return advertismentRepository.getOne(id);
+	}
+
+	@Override
+	public List<Advertisment> getAdsByUser(Integer age, String city) {
+		return advertismentRepository.getAdsByUser(age,city);
 	}
 
 }
