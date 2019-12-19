@@ -35,7 +35,6 @@ public class ClaimServiceImpl implements ClaimService {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_ADD_CLAIM')")
     public ResponseEntity addClaim(User user, Claim claim) {
         claim.setUser(user);
        Claim c= claimReposotry.save(claim);

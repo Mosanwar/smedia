@@ -188,7 +188,7 @@ public class PostServiceImpl implements PostService {
 	@PreAuthorize("hasRole('ROLE_MANAGE_MALICIOUS')")
 	@Override
 	public List<Post> getAllMeltiousPost() {
-		return postRepository.getAllByMaliciousIsTrue();
+		return postRepository.getAllByMaliciousIsTrueAndDisabledIsFalse();
 	}
 
 	@Override
