@@ -20,7 +20,7 @@ public class AdvertismentController {
 
 	@Autowired
 	private AdvertismentService advertismentService;
-	
+
 	@PostMapping("/add")
 	public Advertisment saveAd(@RequestBody Advertisment advertisment, HttpServletRequest request) {
 		
@@ -40,7 +40,7 @@ public class AdvertismentController {
 		}
 		return advertismentService.saveAdvertisment(advertisment);
 	}
-	
+
 	@GetMapping("/get")
 	public Advertisment getAd(Long id) {
 		return advertismentService.getAdvertisment(id);

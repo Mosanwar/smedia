@@ -7,6 +7,7 @@ import edu.mum.ea.socialmedia.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,17 +20,22 @@ public class ClaimServiceImpl implements ClaimService {
     ClaimReposotry claimReposotry;
     @Autowired
     UserRepository userRepository;
+
+    @PreAuthorize("hasRole('ROLE_MANAGE_CLAIMS')")
     @Override
     public List<Claim> getAllClaim() {
         return claimReposotry.findAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGE_CLAIMS')")
     @Override
     public Optional<Claim> getClaimById(Claim claim) {
         Optional<Claim>claim1=claimReposotry.getClaimById(claim.getId());
         return (claim1.isEmpty())?Optional.empty():claim1;
 
     }
+
+    @PreAuthorize("hasRole('ROLE_ADD_CLAIM')")
     public ResponseEntity addClaim(User user, Claim claim) {
         claim.setUser(user);
        Claim c= claimReposotry.save(claim);
@@ -42,6 +48,7 @@ public class ClaimServiceImpl implements ClaimService {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGE_CLAIMS')")
     @Override
     public Optional<Claim> getClaimByUserId(long userId) {
         return claimReposotry.getClaimByUserId(userId);
@@ -49,6 +56,7 @@ public class ClaimServiceImpl implements ClaimService {
     @Override
     @Transactional
 
+    @PreAuthorize("hasRole('ROLE_MANAGE_CLAIMS')")
     public Boolean ignoreCalim(long id) {
         User user=userRepository.findById(id).get();
         claimReposotry.removeClaimByUser(user);

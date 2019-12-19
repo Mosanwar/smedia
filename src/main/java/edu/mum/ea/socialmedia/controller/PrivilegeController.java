@@ -5,6 +5,7 @@ import edu.mum.ea.socialmedia.service.PrivilegeService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class PrivilegeController {
     @Autowired
     private PrivilegeService privilegeService;
 
+    @PreAuthorize("hasRole('MANAGE_PRIVILEGES')")
     @PostMapping("/add")
     public Privilege add(@RequestBody Privilege privilege){
         return getPrivilegeService().add(privilege);
@@ -34,6 +36,7 @@ public class PrivilegeController {
         return getPrivilegeService().findAll();
     }
 
+    @PreAuthorize("hasRole('MANAGE_PRIVILEGES')")
     @DeleteMapping("delete/{id}")
     public Boolean delete(@PathVariable("id") Long id){
         getPrivilegeService().delete(id);

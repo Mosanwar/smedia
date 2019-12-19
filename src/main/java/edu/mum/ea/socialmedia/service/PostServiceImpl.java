@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import edu.mum.ea.socialmedia.model.Post;
@@ -60,6 +61,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.searchAllPostsWithFollowers(PageRequest.of(pageNo,10),userEmail,searchTxt);
     }
 
+	@PreAuthorize("hasRole('ROLE_ADD_COMMENT')")
     @Override
     public void addComment(int postId, String comment) {
 
@@ -77,6 +79,8 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
 		this.template.convertAndSend("/notifications",  user.getName() + " added a new comment");
     }
+
+	@PreAuthorize("hasRole('ROLE_ADD_LIKE')")
     public void addLike(int postId) {
 
         Post post = postRepository.getOne(Long.valueOf(postId));
@@ -92,6 +96,7 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
     }
 
+	@PreAuthorize("hasRole('ROLE_ADD_LIKE')")
     public void removeLike(int postId) {
 
         Post post = postRepository.getOne(Long.valueOf(postId));
@@ -117,9 +122,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.searchAllPostsWithoutFollowers(PageRequest.of(pageNo,10), userEmail,searchTxt);
     }
 
-
-
-
+	@PreAuthorize("hasRole('ROLE_CREATE_POST')")
 	@Override
 	public Post savePost(Post post) {
 		// TODO Auto-generated method stub
@@ -181,6 +184,8 @@ public class PostServiceImpl implements PostService {
 		postRepository.save(p);
 		return true;
 	}
+
+	@PreAuthorize("hasRole('ROLE_MANAGE_MALICIOUS')")
 	@Override
 	public List<Post> getAllMeltiousPost() {
 		return postRepository.getAllByMaliciousIsTrueAndDisabledIsFalse();

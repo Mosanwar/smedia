@@ -5,6 +5,7 @@ import edu.mum.ea.socialmedia.repository.RoleRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
 
+    @PreAuthorize("hasRole('ROLE_MANAGE_ROLES')")
     @Override
     public Role add(Role role) {
         return getRoleRepository().save(role);
@@ -38,6 +40,7 @@ public class RoleServiceImpl implements RoleService {
         return getRoleRepository().findAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGE_ROLES')")
     @Override
     public Boolean deleteById(Long id) {
         getRoleRepository().deleteById(id);

@@ -3,6 +3,7 @@ package edu.mum.ea.socialmedia.service;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,8 @@ public class AdvertismentServiceImpl implements AdvertismentService{
 
 	@Autowired
 	private AdvertismentRepository advertismentRepository;
+
+	@PreAuthorize("hasRole('ROLE_MANAGE_CLAIMS')")
 	@Override
 	public Advertisment saveAdvertisment(Advertisment advertisment) {
 		// TODO Auto-generated method stub
