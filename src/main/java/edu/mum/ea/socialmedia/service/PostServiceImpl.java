@@ -183,7 +183,7 @@ public class PostServiceImpl implements PostService {
 	}
 	@Override
 	public List<Post> getAllMeltiousPost() {
-		return postRepository.getAllByMaliciousIsTrue();
+		return postRepository.getAllByMaliciousIsTrueAndDisabledIsFalse();
 	}
 
 	@Override

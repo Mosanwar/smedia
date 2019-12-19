@@ -18,10 +18,10 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("select P from Post P where P.user.email = :email ")
+    @Query("select P from Post P where P.user.email = :email order by P.createdDate DESC ")
     Page<Post> findAllPostsWithoutFollowers(Pageable pageable, String email);
 
-    @Query("select P from Post P join P.user U where U in (select U from User U join U.followers f where f.email = :email) or U.email = :email ")
+    @Query("select P from Post P join P.user U where U in (select U from User U join U.followers f where f.email = :email) or U.email = :email order by P.createdDate desc ")
     Page<Post> findAllPostsWithFollowers(Pageable pageable, String email);
 
     @Query("select P from Post P where P.user.email = :email and P.body like %:searchTxt% ")
@@ -35,5 +35,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select count (p.id) from Post as p where p.disabled=true and p.user.id=?1")
     Long countByDisabledTruePerUser(Long userId);
 
-    List<Post> getAllByMaliciousIsTrue();
+    List<Post> getAllByMaliciousIsTrueAndDisabledIsFalse();
 }
