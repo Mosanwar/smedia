@@ -154,7 +154,7 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public boolean isAbuser(User user) {
-		if(countByDisabledTruePerUser(user.getId())>=20)
+		if(countByDisabledTruePerUser(user.getId())>=7)
 		{
 			return true;
 

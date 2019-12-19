@@ -21,7 +21,7 @@ import edu.mum.ea.socialmedia.service.AdvertismentService;
 @RequestMapping("/ads")
 public class AdvertismentController {
 
-	public static String uploadDirectory="F:\\Courses\\MUM\\EA\\Solutions\\Social-UI\\src\\assets\\images\\";
+	public static String uploadDirectory="E:\\MUM\\ea\\project\\Social-UI\\Social-UI\\src\\assets\\images\\";
 
 	@Autowired
 	private AdvertismentService advertismentService;

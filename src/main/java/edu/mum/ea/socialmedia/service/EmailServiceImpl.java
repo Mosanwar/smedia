@@ -20,7 +20,7 @@ public class EmailServiceImpl implements EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
         message.setSubject("smedia deactivation service");
-        message.setText("Dear "+user.getName()+", \n we are sorry to inform you that your account has been deactivated and that is for you made about 20 melious post " );
+        message.setText("Dear "+user.getName()+", \n we are sorry to inform you that your account has been deactivated and that is for you made about 20 malicious post " );
         sender.send(message);
 
         return "Mail Sent Success!";

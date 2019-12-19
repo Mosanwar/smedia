@@ -34,7 +34,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    public static String uploadDirectory="F:\\Courses\\MUM\\EA\\Solutions\\Social-UI\\src\\assets\\images\\";
+    public static String uploadDirectory="E:\\MUM\\ea\\project\\Social-UI\\Social-UI\\src\\assets\\images\\";
 
     @Autowired
     private UserService userService;

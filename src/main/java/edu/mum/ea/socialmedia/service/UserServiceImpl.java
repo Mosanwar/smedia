@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         user.setBlocked(true);
         user.setActive(false);
         userRepository.save(user);
-        //emailService.sendMail(user);
+        emailService.sendMail(user);
         return true;
     }
 
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADD_CLAIM')")
+//    @PreAuthorize("hasRole('ROLE_ADD_CLAIM')")
     @Override
     public ResponseEntity addClaim(User user, Claim claim) {
         return claimService.addClaim(user,claim);

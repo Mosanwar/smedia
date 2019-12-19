@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
 
-    public static String uploadDirectory="F:\\Courses\\MUM\\EA\\Solutions\\Social-UI\\src\\assets\\images\\";
+    public static String uploadDirectory="E:\\MUM\\ea\\project\\Social-UI\\Social-UI\\src\\assets\\images\\";
 
 
     @Autowired
@@ -47,8 +47,10 @@ public class PostController {
 	@PostMapping("/add")
 	public Post savePost(@RequestHeader("Authorization") String token,@RequestPart("post") Post post,
                          @RequestParam("images") MultipartFile[] files, HttpServletRequest request) {
-		
-		MultipartFile photo = files[0];
+        MultipartFile photo = null;
+	    if(files.length != 0) {
+            photo = files[0];
+        }
 		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
         post.setUser(userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
 		if (photo != null && !photo.isEmpty()) {

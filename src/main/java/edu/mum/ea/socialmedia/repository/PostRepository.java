@@ -35,5 +35,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select count (p.id) from Post as p where p.disabled=true and p.user.id=?1")
     Long countByDisabledTruePerUser(Long userId);
 
+    @Query("select p from Post as p where p.malicious=true and (p.disabled=false or p.disabled is null)")
     List<Post> getAllByMaliciousIsTrueAndDisabledIsFalse();
 }
